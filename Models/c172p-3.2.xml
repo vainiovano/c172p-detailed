@@ -2,7 +2,7 @@
 
 <PropertyList>
 
- <path>c172p-detailed.ac</path>
+ <path>c172p.ac</path>
  <offsets>
    <pitch-deg>-3.0</pitch-deg>
    <z-m> -0.065 </z-m>
@@ -94,14 +94,14 @@
             </baggage>
         </doors>
 		<crash>
-			<property>sim/multiplay/generic/int[3]</property>	
-		</crash>    
+			<property>sim/multiplay/generic/int[3]</property>
+		</crash>
 		<wing_left_broken>
 			<property>sim/multiplay/generic/int[4]</property>
-		</wing_left_broken>		
+		</wing_left_broken>
 		<wing_right_broken>
 			<property>sim/multiplay/generic/int[5]</property>
-		</wing_right_broken>		
+		</wing_right_broken>
 		<gear_nose_broken>
 			<property>sim/multiplay/generic/int[6]</property>
 		</gear_nose_broken>
@@ -242,7 +242,7 @@
    <inherits-from>Effects/model-transparent</inherits-from>
    <object-name>Propeller.Fast</object-name>
  </effect>
- 
+
   <!-- Gear Damage Spark and Smoke Mod -->
  <model>
     <path>Effects/damage/nose_gear.xml</path>
@@ -328,7 +328,7 @@
  <model>
    <path>Models/Aircraft/marker.xml</path>
  </model>
- 
+
  <!-- breakers and avionics switch -->
  <model>
    <name>BreakersAndAvionicsSwitch</name>
@@ -629,7 +629,7 @@
    <name>vac</name>
    <path>Interior/Panel/Instruments/vac/vac.xml</path>
    <offsets>
-<!-- MOD: Reposition VAC 
+<!-- MOD: Reposition VAC
      <x-m>-0.365</x-m>
      <y-m>-0.432</y-m>
      <z-m>0.0228</z-m>
@@ -710,7 +710,7 @@
      <z-m>-0.25</z-m>
    </offsets>
  </model>
- 
+
  <!-- MOD: OAT -->
  <model>
    <name>OAT</name>
@@ -720,7 +720,7 @@
      <y-m>0.44</y-m>
      <z-m>0.482</z-m>
    </offsets>
- </model> 
+ </model>
  <!-- MODEND -->
 
  <!-- Pedals -->
@@ -743,7 +743,7 @@
      <z-m>-0.65</z-m>
    </offsets>
  </model>
- 
+
  <!--Exhaust-->
  <model>
   <object-name>Exhaust</object-name>
@@ -754,7 +754,7 @@
     <z-m>-0.782313</z-m>
   </offsets>
  </model>
- 
+
   <!-- MOD: Tyre smoke -->
   <model>
     <path>Effects/tyresmoke/tyre-smoke-nose.xml</path>
@@ -1730,7 +1730,7 @@
    <min-m>0</min-m>
    <max-m>10.0</max-m>
  </animation> -->
-  
+
  <!-- MOD: animation for the checklists -->
   <animation>
    <type>pick</type>
@@ -1744,7 +1744,7 @@
 	<dialog-name>checklist</dialog-name>
      </binding>
    </action>
-   
+
    <hovered>
        <binding>
          <command>set-tooltip</command>
@@ -1754,7 +1754,7 @@
    </hovered>
  </animation>
  <!-- MODEND -->
- 
+
  <!-- Primer -->
  <animation>
    <type>pick</type>
@@ -1768,7 +1768,7 @@
 	<script>c172p.pumpPrimer();</script>
      </binding>
    </action>
-   
+
    <hovered>
        <binding>
          <command>set-tooltip</command>
@@ -1777,7 +1777,7 @@
     </binding>
    </hovered>
  </animation>
- 
+
   <animation>
    <type>translate</type>
    <object-name>PrimerLever</object-name>
@@ -1789,7 +1789,7 @@
      <z>0.0</z>
    </axis>
  </animation>
- 
+
     <!-- Cabin heat and Air -->
     <animation>
         <type>slider</type>
@@ -1828,7 +1828,7 @@
         <z>0.0</z>
         </axis>
     </animation>
-    
+
     <animation>
         <type>slider</type>
         <object-name>CabinAir</object-name>
@@ -1881,7 +1881,7 @@
         <script>c172p.rightDoor.toggle();</script>
      </binding>
    </action>
-   
+
    <hovered>
        <binding>
          <command>set-tooltip</command>
@@ -1926,7 +1926,7 @@
        <script>c172p.baggageDoor.toggle();</script>
      </binding>
    </action>
-   
+
    <hovered>
        <binding>
          <command>set-tooltip</command>
@@ -2375,17 +2375,14 @@
      <z>0.0</z>
    </axis>
  </animation>
- 
 
  <animation>
    <type>slider</type>
    <object-name>Throttle</object-name>
    <object-name>ThrottleMount</object-name>
    <visible>true</visible>
-   
    <drag-direction>vertical</drag-direction>
    <!-- no translation, we handle that seperately -->
-   
    <action>
      <binding>
        <command>property-adjust</command>
@@ -2396,7 +2393,6 @@
        <wrap>0</wrap>
      </binding>
    </action>
-   
      <hovered>
       <binding>
         <command>set-tooltip</command>
@@ -2406,7 +2402,6 @@
         <mapping>percent</mapping>
         <property>controls/engines/engine[0]/throttle</property>
      </binding>
-     
      </hovered>
  </animation>
 
@@ -2427,10 +2422,8 @@
    <object-name>Mixture</object-name>
    <object-name>MixtureMount</object-name>
    <visible>true</visible>
-   
    <!-- no translation, we handle that seperately -->
    <drag-direction>vertical</drag-direction>
-   
    <action>
      <binding>
        <command>property-adjust</command>
@@ -2441,7 +2434,6 @@
        <wrap>0</wrap>
      </binding>
    </action>
-   
      <hovered>
       <binding>
         <command>set-tooltip</command>
@@ -2452,7 +2444,6 @@
         <property>controls/engines/engine[0]/mixture</property>
      </binding>
      </hovered>
-
  </animation>
 
  <!-- Elevator Trim -->
@@ -2462,7 +2453,6 @@
    <property>controls/flight/elevator-trim</property>
    <factor>-360</factor>
    <drag-direction>vertical</drag-direction>
-   
    <axis>
      <x>0.0</x>
      <y>1.0</y>
@@ -2473,7 +2463,6 @@
      <y-m>-0.20</y-m>
      <z-m>-0.48</z-m>
    </center>
-   
    <action>
      <binding>
        <command>property-adjust</command>
@@ -2484,7 +2473,6 @@
        <wrap>0</wrap>
      </binding>
    </action>
-   
    <hovered>
     <binding>
       <command>set-tooltip</command>
@@ -2494,7 +2482,6 @@
    </binding>
    </hovered>
  </animation>
-
 
  <animation>
    <type>rotate</type>
@@ -2808,7 +2795,7 @@
    <min-m>0</min-m>
    <max-m>50</max-m>
  </animation>
- 
+
  <!-- Airframe -->
 
  <animation>
@@ -3140,8 +3127,8 @@
  <animation>
    <type>translate</type>
    <object-name>fairing1</object-name>
-   <object-name>NoseWheel</object-name>  
-   <object-name>NoseWheelStrut</object-name>  
+   <object-name>NoseWheel</object-name>
+   <object-name>NoseWheelStrut</object-name>
    <object-name>BottomLink</object-name>
    <object-name>Axle</object-name>
    <!-- Bushkit Mod -->
@@ -3234,7 +3221,7 @@
    </axis>
    <interpolation include="MainRotationInterpolation.xml"/>
  </animation>
- 
+
  <!-- MOD: Spin to gears -->
  <animation>
 	<type>spin</type>
@@ -3322,7 +3309,7 @@
         </not>
     </and>
    </condition>
- </animation> 
+ </animation>
 
  <!-- Wings Both Collapsed -->
  <animation>
@@ -3553,7 +3540,7 @@
 			<property alias="/params/bushkit/property"/>
 			<value>4</value>
 		 </equals>
-	  </or>	 
+	  </or>
 	 </and>
    </condition>
  </animation>
@@ -3808,7 +3795,7 @@
    </condition>
  </animation>
 
- <!-- Nose Gear damage --> 
+ <!-- Nose Gear damage -->
  <animation>
    <type>select</type>
    <object-name>NoseWheelD</object-name>
@@ -3916,7 +3903,7 @@
 			 <equals>
 			   <property alias="/params/bushkit/property"/>
 			   <value>2</value>
-			 </equals>		 
+			 </equals>
 		  </or>
 	  </and>
    </condition>
@@ -3989,7 +3976,7 @@
  <!-- Right Gear no damage -->
  <animation>
    <type>select</type>
-   <object-name>RightWheel</object-name>  
+   <object-name>RightWheel</object-name>
    <condition>
 	  <and>
 		 <not>
@@ -4052,7 +4039,7 @@
 			 <equals>
 			   <property alias="/params/bushkit/property"/>
 			   <value>2</value>
-			 </equals>		 
+			 </equals>
 		  </or>
 	  </and>
    </condition>
@@ -4344,10 +4331,10 @@
 		   <not>
 	           <property alias="/params/crash/property"/>
 	       </not>
-	   </and>	
+	   </and>
    </condition>
  </animation>
- 
+
  <animation>
    <type>select</type>
    <object-name>strobe1BD</object-name>
@@ -4361,7 +4348,7 @@
 	   </and>
    </condition>
  </animation>
- 
+
  <animation>
    <type>select</type>
    <object-name>strobe2BD</object-name>
@@ -4375,7 +4362,7 @@
 	   </and>
    </condition>
  </animation>
- 
+
  <animation>
    <type>select</type>
    <object-name>strobe1Collapse</object-name>
@@ -4439,7 +4426,7 @@
      <z>0.564638</z>
    </axis>
  </animation>
- 
+
  <!-- Damage Mod -->
  <animation>
    <type>translate</type>
@@ -4451,7 +4438,7 @@
      <z>0.999938</z>
    </axis>
  </animation>
- 
+
  <animation>
    <type>translate</type>
    <object-name>strobe2BD</object-name>
@@ -4462,7 +4449,7 @@
      <z>0.999938</z>
    </axis>
  </animation>
- 
+
  <animation>
    <type>translate</type>
    <object-name>strobe1Collapse</object-name>
@@ -4473,7 +4460,7 @@
      <z>-0.799938</z>
    </axis>
  </animation>
- 
+
  <animation>
    <type>translate</type>
    <object-name>strobe2Collapse</object-name>
@@ -4485,7 +4472,7 @@
    </axis>
  </animation>
  <!-- End Damage Mod -->
- 
+
 <animation>
    <type>billboard</type>
    <object-name>strobe1</object-name>
@@ -4638,7 +4625,7 @@
 	 </and>
    </condition>
  </animation>
- 
+
  <!-- damage Mod -->
  <animation>
    <type>select</type>
@@ -4764,7 +4751,7 @@
    <texture-prop>texture</texture-prop>
    <texture>tail.png</texture>
  </animation>
- 
+
  <animation>
    <type>material</type>
    <object-name>L-Float</object-name>
@@ -4792,8 +4779,8 @@
  <animation>
    <type>material</type>
    <!--global type="bool">true</global-->
-   <!-- MOD: resume some to GROUP_Interior 
-        door interior objects can't be grouped because it 
+   <!-- MOD: resume some to GROUP_Interior
+        door interior objects can't be grouped because it
         is inside another group -->
    <object-name>GROUP_Interior</object-name>
    <!-- MOD: resume some to GROUP_Interior -->
@@ -4803,7 +4790,7 @@
    <texture-prop>texture</texture-prop>
    <texture>interior.png</texture>
  </animation>
- 
+
  <animation>
    <type>material</type>
    <!--global type="bool">true</global-->
@@ -4815,15 +4802,15 @@
    <texture-prop>texture</texture-prop>
    <texture>panel.png</texture>
  </animation>
- 
+
  <animation>
    <type>material</type>
    <!--global type="bool">true</global-->
-   <!-- MOD: resume some to GROUP_InteriorParts 
-        doorhandles can't be grouped because 
+   <!-- MOD: resume some to GROUP_InteriorParts
+        doorhandles can't be grouped because
         it is inside another group -->
    <object-name>GROUP_InteriorParts</object-name>
-   <!-- MODEND: resume some to GROUP_InteriorParts --> 
+   <!-- MODEND: resume some to GROUP_InteriorParts -->
    <object-name>doorhandleint_left</object-name>
    <object-name>doorhandleint_right</object-name>
    <property-base>sim/model/liveryparts/</property-base>

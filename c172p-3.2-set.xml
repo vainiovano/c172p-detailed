@@ -22,7 +22,7 @@ Many files from the original c172p directory are included in this file.
 
  <sim>
 
-  <description>Cessna 172P Skyhawk (1981 model, detailed 3.4 version)</description>
+  <description>Cessna 172P Skyhawk (1981 model, detailed 3.2 version)</description>
   <long-description>The Cessna 172 Skyhawk is a four-seat, single-engine, high-wing fixed-wing aircraft. 
       First flown in 1955 and still in production, more Cessna 172s have been built than any other aircraft.
       This version has more detailed textures, instruments and models than the default version.
@@ -68,7 +68,7 @@ Many files from the original c172p directory are included in this file.
   <allow-toggle-cockpit type="bool">true</allow-toggle-cockpit>
 
   <model>
-    <path archive="y">Aircraft/c172p-detailed/Models/c172p-detailed-3.4.xml</path>
+    <path archive="y">Aircraft/c172p/Models/c172p-3.2.xml</path>
 
     <livery>
       <file type="string">D-EEQA</file>
@@ -138,7 +138,7 @@ Many files from the original c172p directory are included in this file.
   </aircraft-data>
 
   <startup>
-	  <splash-texture>Aircraft/c172p-detailed/splash.png</splash-texture>
+	  <splash-texture>Aircraft/c172p/splash.png</splash-texture>
   </startup>
 
   <!-- hide the 2D panel -->
@@ -176,11 +176,11 @@ Many files from the original c172p directory are included in this file.
      
     <!-- needed by shadows in ALS: http://forum.flightgear.org/viewtopic.php?f=4&t=25157&start=75#p232120 -->
     <property-rule n="101">
-      <path>Aircraft/c172p-detailed/Systems/gearAGL.xml</path>
+      <path>Aircraft/c172p/Systems/gearAGL.xml</path>
     </property-rule>
 
     <property-rule n="102">
-      <path>Aircraft/c172p-detailed/Systems/als-lights.xml</path>
+      <path>Aircraft/c172p/Systems/als-lights.xml</path>
     </property-rule>
   </systems>
 
