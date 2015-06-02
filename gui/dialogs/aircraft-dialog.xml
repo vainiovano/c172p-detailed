@@ -52,7 +52,7 @@
 
         <empty><stretch>true</stretch></empty>
         <text>
-            <label>Aircraft Options</label>
+            <label>Aircraft options</label>
         </text>
         <empty><stretch>true</stretch></empty>
 
@@ -131,7 +131,7 @@
 
             <checkbox>
                 <halign>left</halign>
-                <label>ALS Shadow</label>
+                <label>2D shadow</label>
                 <property>/sim/rendering/shadow</property>
                 <live>true</live>
                 <binding>
@@ -142,7 +142,7 @@
 
             <checkbox>
                 <halign>left</halign>
-                <label>ALS Shadow volume</label>
+                <label>3D shadow</label>
                 <property>/sim/rendering/shadow-volume</property>
                 <live>true</live>
                 <binding>
@@ -160,6 +160,16 @@
                     <command>dialog-apply</command>
                 </binding>
             </checkbox>
+
+            <checkbox>
+            <halign>left</halign>
+                <label>Disable frost and fog</label>
+                <property>/fdm/jsbsim/weather</property>
+                <live>true</live>
+                <binding>
+                    <command>dialog-apply</command>
+                </binding>
+            </checkbox>
         </group>
 
         <hrule/>
@@ -168,7 +178,7 @@
             <layout>vbox</layout>
 
             <text>
-                <label>Landing Gear Options</label>
+                <label>Landing gear options</label>
                 <halign>center</halign>
             </text>
 
