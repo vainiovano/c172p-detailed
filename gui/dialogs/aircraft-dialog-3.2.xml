@@ -14,7 +14,7 @@
 
 <PropertyList>
 
-    <name>aircraft-dialog-3.4</name>
+    <name>aircraft-dialog-3.2</name>
     <layout>vbox</layout>
     <resizable>false</resizable>
     <modal>false</modal>
@@ -138,6 +138,16 @@
 				<halign>left</halign>
                 <label>Human models</label>
                 <property>/sim/model/occupants</property>
+                <live>true</live>
+                <binding>
+                    <command>dialog-apply</command>
+                </binding>
+            </checkbox>
+
+            <checkbox>
+				<halign>left</halign>
+                <label>Disable frost and fog</label>
+                <property>/fdm/jsbsim/weather</property>
                 <live>true</live>
                 <binding>
                     <command>dialog-apply</command>

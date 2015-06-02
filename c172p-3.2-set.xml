@@ -235,7 +235,7 @@ Many files from the original c172p directory are included in this file.
     </config>
   </flight-recorder>
 
-  <menubar include="gui/dialogs/c172p-menu-3.4.xml"/>
+  <menubar include="gui/dialogs/c172p-menu-3.2.xml"/>
   <instrumentation>
     <path>Systems/instrumentation.xml</path>
   </instrumentation>
