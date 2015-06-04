@@ -53,7 +53,7 @@ var weather_effects_loop = func {
 	setprop("/environment/aircraft-effects/splash-vector-z", splash_z);
 
 	############################################## frost/fog/heat/air
-	
+	return;
 	dewpointC = getprop("/environment/dewpoint-degc");
 	airtempC = getprop("/environment/temperature-degc");
 	cabinairdewpointC = dewpointC;
