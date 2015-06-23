@@ -30,6 +30,23 @@ controls.applyParkingBrake = func (v) {
 };
 
 ##########################################
+# Click Sounds
+##########################################
+
+var click = func (name, timeout=0.1) {
+    var sound_prop = "/sim/model/c172p/sound/click-" ~ name;
+
+    # Play the sound
+    setprop(sound_prop, 1);
+
+    # Reset the property after 0.2 seconds so that the sound can be
+    # played again.
+    settimer(func {
+        setprop(sound_prop, 0);
+    }, timeout);
+};
+
+##########################################
 # Ground Detection
 ##########################################
 
@@ -123,21 +140,9 @@ var reset_system = func {
 	setprop("/fdm/jsbsim/propulsion/tank[2]/priority", 1);
 	setprop("/fdm/jsbsim/contact/unit[4]/z-position", 50);
 	setprop("/fdm/jsbsim/contact/unit[5]/z-position", 50);
-	if (getprop("/fdm/jsbsim/bushkit") == 3)
-	{
-		setprop("/fdm/jsbsim/contact/unit[13]/z-position", -60);
-		setprop("/fdm/jsbsim/contact/unit[14]/z-position", -60);
-		setprop("/fdm/jsbsim/contact/unit[15]/z-position", -25);
-		setprop("/fdm/jsbsim/contact/unit[16]/z-position", -25);
-	}
-	else
-	{
-		setprop("/fdm/jsbsim/contact/unit[13]/z-position", 0);
-		setprop("/fdm/jsbsim/contact/unit[14]/z-position", 0);
-		setprop("/fdm/jsbsim/contact/unit[15]/z-position", 0);
-		setprop("/fdm/jsbsim/contact/unit[16]/z-position", 0);
-	}
 
+    # Note: these separate flags exist because PUI's <radio> element
+    #       only accepts booleans.
 	var p = getprop("fdm/jsbsim/bushkit");
 	setprop("/sim/model/c172p/bushkit_flag_0",0);
 	setprop("/sim/model/c172p/bushkit_flag_1",0);
@@ -179,6 +184,11 @@ var global_system_loop = func{
 #});
 
 var nasalInit = setlistener("/sim/signals/fdm-initialized", func{
+    # Use Nasal to make some properties persistent. <aircraft-data> does
+    # not work reliably.
+    aircraft.data.add("/sim/model/c172p/immat-on-panel");
+    aircraft.data.load();
+
     reset_system();
     var c172_timer = maketimer(0.25, func{global_system_loop()});
     c172_timer.start();

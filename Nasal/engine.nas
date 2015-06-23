@@ -142,7 +142,7 @@ var autostart = func (msg=1) {
     #c172p.autoPrime();
     setprop("/controls/engines/engine/primer", 3);
 	if (msg)
-	    gui.popupTip("Hold down \"s\" to start the engine. After that, release brakes (press \"B\")", 5);
+	    gui.popupTip("Hold down \"s\" to start the engine", 5);
 };
 
 setlistener("/controls/switches/starter", func {
@@ -161,7 +161,7 @@ setlistener("/controls/switches/starter", func {
             primerTimer.stop();
         }
     }
-}, 1, 1);
+}, 1, 0);
 
 # ================================ Initalize ====================================== 
 # Make sure all needed properties are present and accounted 

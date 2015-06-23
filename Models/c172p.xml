@@ -55,8 +55,16 @@
  <nasal>
    <load>
      var livery_update = aircraft.livery_update.new(
-     "Models/Liveries", 10,
+     "Aircraft/c172p/Models/Liveries", 10,
      func { print("c172p livery update") });
+
+     io.include("Aircraft/c172p/Nasal/registration_number.nas");
+
+     var rplayer = cmdarg();
+     var regnum_path = rplayer.getNode("sim/multiplay/generic/string[0]").getPath();
+     setlistener(regnum_path, func (node) {
+        set_registration_number(rplayer, node.getValue());
+     }, 1, 0);
    </load>
 
    <unload>
@@ -126,6 +134,37 @@
 		<pontoon_right_broken>
 			<property>sim/multiplay/generic/int[13]</property>
 		</pontoon_right_broken>
+		<wing_both_broken>
+			<property>sim/multiplay/generic/int[14]</property>
+		</wing_both_broken>
+		<wing_left_damaged>
+			<property>sim/multiplay/generic/int[15]</property>
+		</wing_left_damaged>
+		<wing_right_damaged>
+			<property>sim/multiplay/generic/int[16]</property>
+		</wing_right_damaged>
+        <gear>
+            <left-rollspeed-ms>engines/engine[7]/n1</left-rollspeed-ms>
+            <right-rollspeed-ms>engines/engine[7]/n2</right-rollspeed-ms>
+            <nose-rollspeed-ms>engines/engine[7]/rpm</nose-rollspeed-ms>
+        </gear>
+        <gear-amphibious>
+            <front-left-compression-ft>engines/engine[3]/n1</front-left-compression-ft>
+            <front-left-position-norm>engines/engine[3]/n2</front-left-position-norm>
+            <front-left-rollspeed-ms>engines/engine[3]/rpm</front-left-rollspeed-ms>
+
+            <front-right-compression-ft>engines/engine[4]/n1</front-right-compression-ft>
+            <front-right-position-norm>engines/engine[4]/n2</front-right-position-norm>
+            <front-right-rollspeed-ms>engines/engine[4]/rpm</front-right-rollspeed-ms>
+
+            <rear-left-compression-ft>engines/engine[5]/n1</rear-left-compression-ft>
+            <rear-left-position-norm>engines/engine[5]/n2</rear-left-position-norm>
+            <rear-left-rollspeed-ms>engines/engine[5]/rpm</rear-left-rollspeed-ms>
+
+            <rear-right-compression-ft>engines/engine[6]/n1</rear-right-compression-ft>
+            <rear-right-position-norm>engines/engine[6]/n2</rear-right-position-norm>
+            <rear-right-rollspeed-ms>engines/engine[6]/rpm</rear-right-rollspeed-ms>
+        </gear-amphibious>
     </params>
 
  <!-- Normal shader effect. Separate effects required for each normal map texture -->
@@ -152,6 +191,28 @@
     <object-name>leftdoor</object-name>
     <object-name>rightdoor</object-name>
     <object-name>Spinner</object-name>
+	<object-name>LRwheel</object-name>
+	<object-name>RRwheel</object-name>
+	<object-name>LRAxle</object-name>
+	<object-name>RRAxle</object-name>
+	<object-name>LFrontWheel</object-name>
+	<object-name>RFrontWheel</object-name>
+	<object-name>LAxle</object-name>
+	<object-name>RAxle</object-name>
+	<object-name>LRtarm</object-name>
+	<object-name>RRtarm</object-name>
+	<object-name>L-Float</object-name>
+	<object-name>R-Float</object-name>
+	<object-name>L-FloatC</object-name>
+	<object-name>R-FloatC</object-name>
+	<object-name>Ldamper</object-name>
+	<object-name>Rdamper</object-name>
+	<object-name>Lstrut.001</object-name>
+	<object-name>Lstrut.002</object-name>
+	<object-name>Rstrut.001</object-name>
+	<object-name>Rstrut.002</object-name>
+	<object-name>LHrudder</object-name>
+	<object-name>RHrudder</object-name>
  </effect>
  <effect>
     <inherits-from>Effects/bumpspec-tail</inherits-from>
@@ -191,6 +252,28 @@
 	 <object-name>doorhandleint_right</object-name>
 	 <object-name>Propeller</object-name>
      <object-name>Spinner</object-name>
+	 <object-name>L-Float</object-name>
+	 <object-name>R-Float</object-name>
+	 <object-name>L-FloatC</object-name>
+	 <object-name>R-FloatC</object-name>
+	 <object-name>LRwheel</object-name>
+	 <object-name>RRwheel</object-name>
+	 <object-name>LRAxle</object-name>
+	 <object-name>RRAxle</object-name>
+	 <object-name>LFrontWheel</object-name>
+	 <object-name>RFrontWheel</object-name>
+	 <object-name>LAxle</object-name>
+	 <object-name>RAxle</object-name>
+	 <object-name>LRtarm</object-name>
+	 <object-name>RRtarm</object-name>
+	 <object-name>Ldamper</object-name>
+	 <object-name>Rdamper</object-name>
+	 <object-name>Lstrut.001</object-name>
+	 <object-name>Lstrut.002</object-name>
+	 <object-name>Rstrut.001</object-name>
+	 <object-name>Rstrut.002</object-name>
+	 <object-name>LHrudder</object-name>
+	 <object-name>RHrudder</object-name>
 	 <shininess>128</shininess>
 	 <specular>
 		 <r>1</r>
@@ -219,14 +302,81 @@
 	 <object-name>navlight_leftD</object-name>
 	 <object-name>navlight_leftBD</object-name>
 	 <object-name>navlight_leftCollapse</object-name>
+	 <object-name>navlight_leftDRB</object-name>
+	 <object-name>navlight_leftGRB</object-name>
 	 <object-name>navlight_rightU</object-name>
 	 <object-name>navlight_rightD</object-name>
 	 <object-name>navlight_rightBD</object-name>
 	 <object-name>navlight_rightCollapse</object-name>
+	 <object-name>navlight_rightDLB</object-name>
+	 <object-name>navlight_rightGLB</object-name>
 	 <object-name>strobe1BD</object-name>
      <object-name>strobe2BD</object-name>
 	 <object-name>strobe1Collapse</object-name>
      <object-name>strobe2Collapse</object-name>
+ </effect>
+
+ <!-- interior flashlight effects -->
+ <effect>
+    <inherits-from>Effects/interior/c172p-flashlight</inherits-from>
+    <object-name>AirVent_left</object-name>
+    <object-name>AirVent_right</object-name>
+	<object-name>ElevatorTrimPos</object-name>
+	<object-name>FuelSelectorFace</object-name>
+	<object-name>FuelSelectorLeft</object-name>
+	<object-name>FuelSelectorRight</object-name>
+	<object-name>FuelSelectorBoth</object-name>
+	<object-name>FuelSelectorOff</object-name>
+	<object-name>mike_mount</object-name>
+	<object-name>Pedestal</object-name>
+	<object-name>InstrumentCover</object-name>
+	<object-name>panel_1_1.inf</object-name>
+    <object-name>panel_1_1_right</object-name>
+    <object-name>panel_1_gauges</object-name>
+	<object-name>backseat_left</object-name>
+	<object-name>carpet</object-name>
+    <object-name>chassis</object-name>
+    <object-name>pilotseat_left</object-name>
+    <object-name>pilotseat_right</object-name>
+    <object-name>CabinAirMounts</object-name>
+    <object-name>CabinAir</object-name>
+    <object-name>CabinHeat</object-name>
+    <object-name>BeaconSwitch</object-name>
+    <object-name>CarbHeat</object-name>
+    <object-name>CarbHeatMount</object-name>
+	<object-name>GenSwitch</object-name>
+	<object-name>LandingLightSwitch</object-name>
+    <object-name>LeftBag</object-name>
+	<object-name>bolt.012</object-name>
+    <object-name>bolt.013</object-name>
+    <object-name>bolt.014</object-name>
+    <object-name>bolt.015</object-name>
+	<object-name>MasterSwitch</object-name>
+	<object-name>Mixture</object-name>
+	<object-name>MixtureMount</object-name>
+	<object-name>NavLightSwitch</object-name>
+	<object-name>PitotHeatSwitch</object-name>
+	<object-name>PrimerLeverMount</object-name>
+	<object-name>StrobeSwitch</object-name>
+	<object-name>TaxiLightSwitch</object-name>
+	<object-name>Throttle</object-name>
+	<object-name>ThrottleMount</object-name>
+	<object-name>mike</object-name>
+	<object-name>mike_chord</object-name>
+	<object-name>Panel_0</object-name>
+	<object-name>doorhandleint_right</object-name>
+    <object-name>doorhandleint_left</object-name>
+	<object-name>doorint_right</object-name>
+    <object-name>doorint_left</object-name>
+	<object-name>ParkingBrake</object-name>
+	<object-name>PrimerLever</object-name>
+    <object-name>TrimWheel</object-name>
+	<object-name>bolts_cabin</object-name>
+	<object-name>bolts_panel</object-name>
+	<object-name>seat_mount</object-name>
+	<object-name>windlocket_right</object-name>
+	<object-name>windlocket_left</object-name>
+	<object-name>CeilingSpeaker</object-name>
  </effect>
 
  <effect>
@@ -538,7 +688,7 @@
 
  <model>
    <name>kx165-1</name>
-   <path>Aircraft/Instruments-3d/kx165/kx165-1.xml</path>
+   <path>Interior/Panel/Instruments/kx165/kx165-1.xml</path>
    <overlay>
      <params>
        <dimming>sim/model/material/instruments/factor</dimming>
@@ -557,7 +707,7 @@
 
  <model>
    <name>kx165-2</name>
-   <path>Aircraft/Instruments-3d/kx165/kx165-2.xml</path>
+   <path>Interior/Panel/Instruments/kx165/kx165-2.xml</path>
    <overlay>
      <params>
        <dimming>sim/model/material/instruments/factor</dimming>
@@ -598,7 +748,7 @@
  <!-- MOD: transponder -->
   <model>
    <name>transponder</name>
-   <path>Aircraft/Instruments-3d/kt76a/kt76a.xml</path>
+   <path>Interior/Panel/Instruments/kt76a/kt76a.xml</path>
    <overlay>
      <params>
        <dimming>sim/model/material/instruments/factor</dimming>
@@ -789,7 +939,8 @@
 
  <!-- MOD: Tyre Spray -->
   <model>
-    <path>Aircraft/Generic/Effects/rain-nose.xml</path>
+    <!--path>Aircraft/Generic/Effects/rain-nose.xml</path-->
+	<path>Effects/tyrespray/rain-nose.xml</path>
     <name>rain-nose</name>
 	<offsets>
 	  <x-m> -1. </x-m>
@@ -799,7 +950,8 @@
   </model>
 
   <model>
-    <path>Aircraft/Generic/Effects/rain-port.xml</path>
+    <!--path>Aircraft/Generic/Effects/rain-port.xml</path-->
+	<path>Effects/tyrespray/rain-port.xml</path>
     <name>rain-port</name>
     <offsets>
       <x-m> .3 </x-m>
@@ -809,7 +961,8 @@
   </model>
 
   <model>
-    <path>Aircraft/Generic/Effects/rain-stbd.xml</path>
+    <!--path>Aircraft/Generic/Effects/rain-stbd.xml</path-->
+	<path>Effects/tyrespray/rain-stbd.xml</path>
     <name>rain-stbd</name>
     <offsets>
       <x-m>0.1</x-m>
@@ -884,31 +1037,6 @@
      <z-m>0</z-m>
    </offsets>
   </model>
-
-<text>
-    <name>Registration</name>
-    <type type="string">text-value</type>
-    <property type="string">/sim/multiplay/callsign</property>
-    <format type="string">%s</format>
-    <draw-text type="bool">true</draw-text>
-    <font>Helvetica.txf</font>
-    <character-size type="double">0.012</character-size>
-    <character-aspect-ratio type="double">1.0</character-aspect-ratio>
-    <axis-alignment>yz-plane</axis-alignment>
-    <max-height>0.2</max-height>
-    <max-width>0.5</max-width>
-    <font-resolution>
-        <width type="int">32</width>
-        <height type="int">32</height>
-    </font-resolution>
-    <alignment>center-center</alignment>
-    <offsets>
-        <x-m>-0.34</x-m>
-        <y-m>0.25</y-m>
-        <z-m>0.01</z-m>
-    </offsets>
-</text>
-
 
 <!-- Labels activated by hotspots -->
 <text>
@@ -1045,7 +1173,30 @@
     <offsets>
         <x-m>-0.34</x-m>
         <y-m>0.116</y-m>
-        <z-m>-0.085</z-m>
+        <z-m>-0.122</z-m>
+    </offsets>
+</text>
+
+<text>
+    <name>LabelTransponder</name>
+    <type type="string">literal</type>
+    <text type="string">Transponder</text>
+    <draw-text type="bool">true</draw-text>
+    <font>Helvetica.txf</font>
+    <character-size type="double">0.012</character-size>
+    <character-aspect-ratio type="double">1.0</character-aspect-ratio>
+    <axis-alignment>yz-plane</axis-alignment>
+    <max-height>0.2</max-height>
+    <max-width>0.15</max-width>
+    <font-resolution>
+        <width type="int">32</width>
+        <height type="int">32</height>
+    </font-resolution>
+    <alignment>center-center</alignment>
+    <offsets>
+        <x-m>-0.34</x-m>
+        <y-m> 0.116</y-m>
+        <z-m>-0.186</z-m>
     </offsets>
 </text>
 
@@ -1068,7 +1219,7 @@
     <offsets>
         <x-m>-0.34</x-m>
         <y-m>0.116</y-m>
-        <z-m>-0.142</z-m>
+        <z-m>-0.085</z-m>
     </offsets>
 </text>
 
@@ -1305,7 +1456,7 @@
 <text>
     <name>LabelKR87</name>
     <type type="string">literal</type>
-    <text type="string">ADF Receiver</text>
+    <text type="string">ADF</text>
     <draw-text type="bool">true</draw-text>
     <font>Helvetica.txf</font>
     <character-size type="double">0.012</character-size>
@@ -1321,7 +1472,7 @@
     <offsets>
         <x-m>-0.34</x-m>
         <y-m>0.113</y-m>
-        <z-m>0.061</z-m>
+        <z-m>-0.036</z-m>
     </offsets>
 </text>
 
@@ -1596,8 +1747,8 @@
     <alignment>center-center</alignment>
     <offsets>
         <x-m>-0.34</x-m>
-        <y-m> 0.07</y-m>
-        <z-m>-0.18</z-m>
+        <y-m> 0.05</y-m>
+        <z-m>-0.22</z-m>
     </offsets>
 </text>
 
@@ -1632,6 +1783,7 @@
     <object-name>LabelAltimeter</object-name>
     <object-name>LabelBatteryGauge</object-name>
     <object-name>LabelAutopilot</object-name>
+    <object-name>LabelTransponder</object-name>
     <object-name>LabelDME</object-name>
     <object-name>LabelTurn</object-name>
     <object-name>LabelVSI</object-name>
@@ -1672,6 +1824,7 @@
     <object-name>LabelAltimeter</object-name>
     <object-name>LabelBatteryGauge</object-name>
     <object-name>LabelAutopilot</object-name>
+    <object-name>LabelTransponder</object-name>
     <object-name>LabelDME</object-name>
     <object-name>LabelTurn</object-name>
     <object-name>LabelVSI</object-name>
@@ -2105,6 +2258,10 @@
        <command>property-toggle</command>
        <property>controls/lighting/landing-lights</property>
      </binding>
+     <binding>
+       <command>nasal</command>
+       <script>c172p.click("light")</script>
+     </binding>
    </action>
    <hovered>
     <binding>
@@ -2128,6 +2285,10 @@
        <command>property-toggle</command>
        <property>controls/lighting/taxi-light</property>
      </binding>
+     <binding>
+       <command>nasal</command>
+       <script>c172p.click("light")</script>
+     </binding>
    </action>
    <hovered>
     <binding>
@@ -2150,6 +2311,10 @@
      <binding>
        <command>property-toggle</command>
        <property>controls/lighting/strobe</property>
+     </binding>
+     <binding>
+       <command>nasal</command>
+       <script>c172p.click("light")</script>
      </binding>
    </action>
    <hovered>
@@ -2178,6 +2343,10 @@
            <command>property-toggle</command>
            <property>controls/engines/engine/master-bat</property>
          </binding>
+         <binding>
+           <command>nasal</command>
+           <script>c172p.click("master")</script>
+         </binding>
        </action>
        <hovered>
         <binding>
@@ -2201,6 +2370,10 @@
          <binding>
            <command>property-toggle</command>
            <property>controls/engines/engine/master-alt</property>
+         </binding>
+         <binding>
+           <command>nasal</command>
+           <script>c172p.click("master")</script>
          </binding>
        </action>
        <hovered>
@@ -2226,6 +2399,10 @@
        <command>property-toggle</command>
        <property>controls/lighting/beacon</property>
      </binding>
+     <binding>
+       <command>nasal</command>
+       <script>c172p.click("light")</script>
+     </binding>
    </action>
    <hovered>
     <binding>
@@ -2249,6 +2426,10 @@
        <command>property-toggle</command>
        <property>controls/lighting/nav-lights</property>
      </binding>
+     <binding>
+       <command>nasal</command>
+       <script>c172p.click("light")</script>
+     </binding>
    </action>
    <hovered>
     <binding>
@@ -2271,6 +2452,10 @@
      <binding>
        <command>property-toggle</command>
        <property>controls/anti-ice/pitot-heat</property>
+     </binding>
+     <binding>
+       <command>nasal</command>
+       <script>c172p.click("light")</script>
      </binding>
    </action>
    <hovered>
@@ -2324,6 +2509,10 @@
      <binding>
        <command>property-toggle</command>
        <property>/controls/gear/brake-parking</property>
+     </binding>
+     <binding>
+       <command>nasal</command>
+       <script>c172p.click("parking", 1.6)</script>
      </binding>
    </action>
    <hovered>
@@ -2974,10 +3163,7 @@
    <type>translate</type>
    <object-name>flaps</object-name>
    <!-- Damage Mod -->
-   <object-name>flapsRD</object-name>
-   <object-name>flapsLD</object-name>
-   <object-name>flapsBD</object-name>
-   <object-name>flapsCollapse</object-name>
+   <object-name>flapsD</object-name>
    <property>surface-positions/flap-pos-norm</property>
    <factor>0.07</factor>
    <axis>
@@ -2991,10 +3177,7 @@
    <type>rotate</type>
    <object-name>flaps</object-name>
    <!-- Damage Mod -->
-   <object-name>flapsRD</object-name>
-   <object-name>flapsLD</object-name>
-   <object-name>flapsBD</object-name>
-   <object-name>flapsCollapse</object-name>
+   <object-name>flapsD</object-name>
    <property>surface-positions/flap-pos-norm</property>
    <factor>30</factor>
    <center>
@@ -3229,7 +3412,7 @@
 	<!-- Bushkit Mod -->
 	<object-name>RightWheelBK</object-name>
 	<object-name>RightWheelBKs</object-name>
-	<property>gear/gear[1]/rollspeed-ms</property>
+    <property alias="/params/gear/right-rollspeed-ms"/>
 	<factor>13</factor>
 	<axis>
 		<x>0</x>
@@ -3248,7 +3431,7 @@
 	<!-- Bushkit Mod -->
 	<object-name>LeftWheelBK</object-name>
 	<object-name>LeftWheelBKs</object-name>
-	<property>gear/gear[1]/rollspeed-ms</property>
+    <property alias="/params/gear/left-rollspeed-ms"/>
 	<factor>13</factor>
 	<axis>
 		<x>0</x>
@@ -3266,7 +3449,7 @@
 	<object-name>NoseWheel</object-name>
 	<!-- Bushkit Mod -->
 	<object-name>NoseWheelBK</object-name>
-	<property>gear/gear[0]/rollspeed-ms</property>
+    <property alias="/params/gear/nose-rollspeed-ms"/>
 	<factor>13</factor>
 	<axis>
 		<x>0</x>
@@ -3279,11 +3462,61 @@
 		<z-m>-1.18615</z-m>
 	</center>
  </animation>
-<!-- MODEND: Spin to gears -->
+ <!-- MODEND: Spin to gears -->
 
-   <!-- Damage Mod  -->
-   <!-- Wings No Damage -->
-   <animation>
+ <!-- Damage Mod  -->
+
+ <!--Props Not Damaged -->
+ <animation>
+   <type>select</type>
+   <object-name>Propeller</object-name>
+   <object-name>Propeller.Fast</object-name>
+   <condition>
+	  <not>
+		<or>
+		  <property alias="/params/gear_nose_broken/property"/>
+		  <property alias="/params/pontoon_left_damaged/property"/>
+		  <property alias="/params/pontoon_left_broken/property"/>
+		  <property alias="/params/pontoon_right_damaged/property"/>
+		  <property alias="/params/pontoon_right_broken/property"/>
+	    </or>
+	  </not>
+   </condition>
+ </animation>
+
+ <!--Prop Damaged -->
+ <animation>
+   <type>select</type>
+   <object-name>PropellerD</object-name>
+   <condition>
+	    <or>
+		    <property alias="/params/gear_nose_broken/property"/>
+		    <property alias="/params/pontoon_left_damaged/property"/>
+		    <property alias="/params/pontoon_left_broken/property"/>
+		    <property alias="/params/pontoon_right_damaged/property"/>
+		    <property alias="/params/pontoon_right_broken/property"/>
+		</or>
+   </condition>
+ </animation>
+
+ <!-- Wing flaps damage -->
+ <animation>
+   <type>select</type>
+   <object-name>flapsD</object-name>
+   <condition>
+      <or>
+		  <property alias="/params/wing_left_damaged/property"/>
+		  <property alias="/params/wing_right_damaged/property"/>
+          <property alias="/params/wing_left_broken/property"/>
+          <property alias="/params/wing_right_broken/property"/>
+	      <property alias="/params/wing_both_broken/property"/>
+          <property alias="/params/crash/property"/>
+      </or>
+   </condition>
+ </animation>
+
+ <!-- Wings No Damage -->
+ <animation>
    <type>select</type>
    <object-name>wing_1</object-name>
    <object-name>wing_0</object-name>
@@ -3298,12 +3531,21 @@
    <object-name>landinglight2</object-name>
    <condition>
     <and>
+		<not>
+		  <property alias="/params/wing_left_damaged/property"/>
+		</not>
+		<not>
+		  <property alias="/params/wing_right_damaged/property"/>
+		</not>
         <not>
             <property alias="/params/wing_left_broken/property"/>
         </not>
         <not>
             <property alias="/params/wing_right_broken/property"/>
         </not>
+		<not>
+			<property alias="/params/wing_both_broken/property"/>
+		</not>
         <not>
             <property alias="/params/crash/property"/>
         </not>
@@ -3311,14 +3553,13 @@
    </condition>
  </animation>
 
- <!-- Wings Both Collapsed -->
+ <!-- Wings Both Collapsed-->
  <animation>
    <type>select</type>
    <object-name>wing_1Collapse</object-name>
    <object-name>wing_0Collapse</object-name>
    <object-name>rightaileronCollapse</object-name>
    <object-name>leftaileronCollapse</object-name>
-   <object-name>flapsCollapse</object-name>
    <object-name>RightNavLightCollapse</object-name>
    <object-name>navlight_rightCollapse</object-name>
    <object-name>LeftNavLightCollapse</object-name>
@@ -3330,6 +3571,26 @@
    </condition>
  </animation>
 
+ <!-- Wings Both Broken -->
+ <animation>
+   <type>select</type>
+   <object-name>wing_1BB</object-name>
+   <condition>
+      <and>
+	    <or>
+	        <property alias="/params/wing_both_broken/property"/>
+			<and>
+			    <property alias="/params/wing_left_broken/property"/>
+		        <property alias="/params/wing_right_broken/property"/>
+			</and>
+		</or>
+		<not>
+		    <property alias="/params/crash/property"/>
+		</not>
+	  </and>
+   </condition>
+ </animation>
+
  <!-- Wings Both Damaged -->
  <animation>
    <type>select</type>
@@ -3337,7 +3598,6 @@
    <object-name>wing_1BD</object-name>
    <object-name>rightaileronBD</object-name>
    <object-name>leftaileronBD</object-name>
-   <object-name>flapsBD</object-name>
    <object-name>RightNavLightBD</object-name>
    <object-name>navlight_rightBD</object-name>
    <object-name>LeftNavLightBD</object-name>
@@ -3346,23 +3606,31 @@
    <object-name>landinglight2BD</object-name>
    <condition>
 		<and>
-			<property alias="/params/wing_left_broken/property"/>
-			<property alias="/params/wing_right_broken/property"/>
+			<property alias="/params/wing_left_damaged/property"/>
+			<property alias="/params/wing_right_damaged/property"/>
 			<not>
-			 <property alias="/params/crash/property"/>
+		      <property alias="/params/wing_left_broken/property"/>
+		    </not>
+		    <not>
+		      <property alias="/params/wing_right_broken/property"/>
+		    </not>
+			<not>
+			  <property alias="/params/crash/property"/>
+			</not>
+			<not>
+			  <property alias="/params/wing_both_broken/property"/>
 			</not>
 		</and>
    </condition>
  </animation>
 
- <!-- Wings Left Broken -->
+ <!-- Wings Left Damaged -->
  <animation>
    <type>select</type>
    <object-name>wing_0LD</object-name>
    <object-name>wing_1LD</object-name>
    <object-name>rightaileronLD</object-name>
    <object-name>leftaileronLD</object-name>
-   <object-name>flapsLD</object-name>
    <object-name>LeftNavLightD</object-name>
    <object-name>navlight_leftD</object-name>
    <object-name>RightNavLightU</object-name>
@@ -3371,25 +3639,33 @@
    <object-name>landinglight2LD</object-name>
    <condition>
 	<and>
-		 <property alias="/params/wing_left_broken/property"/>
-		 <not>
+		<property alias="/params/wing_left_damaged/property"/>
+		<not>
+		  <property alias="/params/wing_right_damaged/property"/>
+		</not>
+		<not>
+		  <property alias="/params/wing_left_broken/property"/>
+		</not>
+		<not>
 		  <property alias="/params/wing_right_broken/property"/>
 		</not>
-		 <not>
+		<not>
+		  <property alias="/params/wing_both_broken/property"/>
+		</not>
+		<not>
 		  <property alias="/params/crash/property"/>
-		 </not>
+		</not>
 	</and>
    </condition>
  </animation>
 
- <!-- Wings Left Broken -->
+ <!-- Wings Right Damaged -->
  <animation>
    <type>select</type>
    <object-name>wing_0RD</object-name>
    <object-name>wing_1RD</object-name>
    <object-name>rightaileronRD</object-name>
    <object-name>leftaileronRD</object-name>
-   <object-name>flapsRD</object-name>
    <object-name>RightNavLightD</object-name>
    <object-name>navlight_rightD</object-name>
    <object-name>LeftNavLightU</object-name>
@@ -3398,13 +3674,128 @@
    <object-name>landinglight2RD</object-name>
    <condition>
 	<and>
-		 <property alias="/params/wing_right_broken/property"/>
-		 <not>
+		<property alias="/params/wing_right_damaged/property"/>
+		<not>
+		 <property alias="/params/wing_left_damaged/property"/>
+		</not>
+		<not>
 		  <property alias="/params/wing_left_broken/property"/>
-		 </not>
-		 <not>
+		</not>
+		<not>
+		  <property alias="/params/wing_right_broken/property"/>
+		</not>
+		<not>
+		  <property alias="/params/wing_both_broken/property"/>
+		</not>
+		<not>
 		  <property alias="/params/crash/property"/>
-		 </not>
+		</not>
+	</and>
+   </condition>
+ </animation>
+
+<!-- Wings Left Broken Right Damaged -->
+ <animation>
+   <type>select</type>
+   <object-name>wing_1RDLB</object-name>
+   <object-name>rightaileronRDLB</object-name>
+   <object-name>RightNavLightDLB</object-name>
+   <object-name>navlight_rightDLB</object-name>
+   <condition>
+	<and>
+		<property alias="/params/wing_left_broken/property"/>
+		<property alias="/params/wing_right_damaged/property"/>
+		<not>
+		  <property alias="/params/wing_right_broken/property"/>
+		</not>
+		<not>
+		  <property alias="/params/wing_both_broken/property"/>
+		</not>
+		<not>
+		  <property alias="/params/crash/property"/>
+		</not>
+	</and>
+   </condition>
+ </animation>
+
+ <!-- Wings Right Broken Left Damaged -->
+ <animation>
+   <type>select</type>
+   <object-name>wing_0LDRB</object-name>
+   <object-name>wing_1LDRB</object-name>
+   <object-name>leftaileronLDRB</object-name>
+   <object-name>LeftNavLightDRB</object-name>
+   <object-name>navlight_leftDRB</object-name>
+   <object-name>landinglightcoverLDRB</object-name>
+   <object-name>landinglight2LDRB</object-name>
+   <condition>
+	  <and>
+		<property alias="/params/wing_right_broken/property"/>
+		<property alias="/params/wing_left_damaged/property"/>
+		<not>
+		  <property alias="/params/wing_left_broken/property"/>
+		</not>
+		<not>
+		  <property alias="/params/wing_both_broken/property"/>
+		</not>
+		<not>
+		  <property alias="/params/crash/property"/>
+		</not>
+	  </and>
+   </condition>
+ </animation>
+ 
+ <!-- Wings Left Broken Right Un-damaged -->
+ <animation>
+   <type>select</type>
+   <object-name>wing_1RGLB</object-name>
+   <object-name>rightaileronRGLB</object-name>
+   <object-name>RightNavLightGLB</object-name>
+   <object-name>navlight_rightGLB</object-name>
+   <condition>
+	<and>
+		<property alias="/params/wing_left_broken/property"/>
+		<not>
+		  <property alias="/params/wing_right_broken/property"/>
+		</not>
+		<not>
+		  <property alias="/params/wing_right_damaged/property"/>
+		</not>
+		<not>
+		  <property alias="/params/wing_both_broken/property"/>
+		</not>
+		<not>
+		  <property alias="/params/crash/property"/>
+		</not>
+	</and>
+   </condition>
+ </animation>
+
+ <!-- Wings Right Broken Left Un-damaged -->
+ <animation>
+   <type>select</type>
+   <object-name>wing_0LGRB</object-name>
+   <object-name>wing_1LGRB</object-name>
+   <object-name>leftaileronLGRB</object-name>
+   <object-name>LeftNavLightGRB</object-name>
+   <object-name>navlight_leftGRB</object-name>
+   <object-name>landinglightcoverLGRB</object-name>
+   <object-name>landinglight2LGRB</object-name>
+   <condition>
+	<and>
+		<property alias="/params/wing_right_broken/property"/>
+		<not>
+		  <property alias="/params/wing_left_broken/property"/>
+		</not>
+		<not>
+		  <property alias="/params/wing_left_damaged/property"/>
+		</not>
+		<not>
+		  <property alias="/params/wing_both_broken/property"/>
+		</not>
+		<not>
+		  <property alias="/params/crash/property"/>
+		</not>
 	</and>
    </condition>
  </animation>
@@ -3454,6 +3845,10 @@
    <type>select</type>
    <object-name>L-Float</object-name>
    <object-name>LRwheel</object-name>
+   <object-name>LRAxle</object-name>
+   <object-name>LFrontWheel</object-name>
+   <object-name>LAxle</object-name>
+   <object-name>LRtarm</object-name>
    <object-name>Ldamper</object-name>
    <object-name>Lstrut.001</object-name>
    <object-name>Lstrut.002</object-name>
@@ -3478,6 +3873,10 @@
    <type>select</type>
    <object-name>R-Float</object-name>
    <object-name>RRwheel</object-name>
+   <object-name>RRAxle</object-name>
+   <object-name>RFrontWheel</object-name>
+   <object-name>RAxle</object-name>
+   <object-name>RRtarm</object-name>
    <object-name>Rdamper</object-name>
    <object-name>Rstrut.001</object-name>
    <object-name>Rstrut.002</object-name>
@@ -3497,55 +3896,59 @@
    </condition>
  </animation>
 
- <!--Props Not Damaged -->
+ <!-- Left Float Not Damaged -->
  <animation>
    <type>select</type>
-   <object-name>Propeller</object-name>
-   <object-name>Propeller.Fast</object-name>
+   <object-name>LHrudder</object-name>
    <condition>
-     <and>
-	  <not>
-		<property alias="/params/gear_nose_broken/property"/>
-	  </not>
-	  <not>
-		<property alias="/params/pontoon_left_damaged/property"/>
-	  </not>
-	  <not>
-		<property alias="/params/pontoon_left_broken/property"/>
-	  </not>
-      <not>
-		<property alias="/params/pontoon_right_damaged/property"/>
-	  </not>
-	  <not>
-		<property alias="/params/pontoon_right_broken/property"/>
-	  </not>
-	  <or>
-	    <equals>
-			<property alias="/params/bushkit/property"/>
-			<value>0</value>
-		</equals>
-		<equals>
-			<property alias="/params/bushkit/property"/>
-			<value>1</value>
-		</equals>
-		<equals>
-			<property alias="/params/bushkit/property"/>
-			<value>2</value>
-		</equals>
-		<equals>
-			<property alias="/params/bushkit/property"/>
-			<value>3</value>
-		 </equals>
-		 <equals>
-			<property alias="/params/bushkit/property"/>
-			<value>4</value>
-		 </equals>
-	  </or>
-	 </and>
+	  <and>
+		<not>
+		  <property alias="/params/pontoon_left_damaged/property"/>
+		</not>
+		<not>
+		  <property alias="/params/pontoon_left_broken/property"/>
+		</not>
+		<or>
+			<equals>
+			  <property alias="/params/bushkit/property"/>
+			  <value>3</value>
+			</equals>
+			<equals>
+			  <property alias="/params/bushkit/property"/>
+			  <value>4</value>
+			</equals>
+		</or>
+	  </and>
    </condition>
  </animation>
 
- <!-- Pontoon and Amphibious Not Damaged -->
+ <!--Right Float Not Damaged -->
+ <animation>
+   <type>select</type>
+   <object-name>RHrudder</object-name>
+   <condition>
+	  <and>
+	    <not>
+		  <property alias="/params/pontoon_right_damaged/property"/>
+		</not>
+		<not>
+		  <property alias="/params/pontoon_right_broken/property"/>
+		</not>
+		<or>
+			<equals>
+			  <property alias="/params/bushkit/property"/>
+			  <value>3</value>
+			</equals>
+			<equals>
+			  <property alias="/params/bushkit/property"/>
+			  <value>4</value>
+			</equals>
+		</or>
+	  </and>
+   </condition>
+ </animation>
+
+ <!-- Pontoon and Amphibious -->
  <animation>
    <type>select</type>
    <object-name>RuddWires</object-name>
@@ -3564,60 +3967,20 @@
    </condition>
  </animation>
 
- <!-- Pontoon and Amphibious Not Damaged -->
- <animation>
-   <type>select</type>
-   <object-name>LHrudder</object-name>
-   <object-name>RHrudder</object-name>
-   <condition>
-      <and>
-		<not>
-		  <property alias="/params/gear_nose_broken/property"/>
-	    </not>
-	    <not>
-		  <property alias="/params/pontoon_left_damaged/property"/>
-	    </not>
-	    <not>
-		  <property alias="/params/pontoon_left_broken/property"/>
-	    </not>
-        <not>
-		  <property alias="/params/pontoon_right_damaged/property"/>
-	    </not>
-	    <not>
-		  <property alias="/params/pontoon_right_broken/property"/>
-	    </not>
-		<or>
-		  <equals>
-			<property alias="/params/bushkit/property"/>
-			<value>3</value>
-		  </equals>
-		  <equals>
-			<property alias="/params/bushkit/property"/>
-			<value>4</value>
-		  </equals>
-		</or>
-	  </and>
-   </condition>
- </animation>
-
  <!-- Left Pontoon Damaged -->
  <animation>
    <type>select</type>
    <object-name>L-FloatCD</object-name>
-   <object-name>LHrudderD</object-name>
    <condition>
 	  <and>
 	    <property alias="/params/pontoon_left_damaged/property"/>
-		<or>
-		  <equals>
-		    <property alias="/params/bushkit/property"/>
-		    <value>3</value>
-		  </equals>
-		  <equals>
-		    <property alias="/params/bushkit/property"/>
-		    <value>4</value>
-		  </equals>
-		</or>
+		<not>
+		  <property alias="/params/pontoon_left_broken/property"/>
+		</not>
+		<equals>
+		  <property alias="/params/bushkit/property"/>
+		  <value>3</value>
+		</equals>
 	  </and>
    </condition>
  </animation>
@@ -3626,20 +3989,16 @@
  <animation>
    <type>select</type>
    <object-name>R-FloatCD</object-name>
-   <object-name>RHrudderD</object-name>
    <condition>
 	  <and>
 	    <property alias="/params/pontoon_right_damaged/property"/>
-		<or>
-		  <equals>
-		    <property alias="/params/bushkit/property"/>
-		    <value>3</value>
-		  </equals>
-		  <equals>
-		    <property alias="/params/bushkit/property"/>
-		    <value>4</value>
-		  </equals>
-		</or>
+		<not>
+		  <property alias="/params/pontoon_right_broken/property"/>
+		</not>
+		<equals>
+		  <property alias="/params/bushkit/property"/>
+		  <value>3</value>
+		</equals>
 	  </and>
    </condition>
  </animation>
@@ -3648,20 +4007,13 @@
  <animation>
    <type>select</type>
    <object-name>L-FloatCB</object-name>
-   <object-name>LHrudderB</object-name>
    <condition>
       <and>
 	    <property alias="/params/pontoon_left_broken/property"/>
-		<or>
-		  <equals>
-		    <property alias="/params/bushkit/property"/>
-		    <value>3</value>
-		  </equals>
-		  <equals>
-		    <property alias="/params/bushkit/property"/>
-		    <value>4</value>
-		  </equals>
-		</or>
+		<equals>
+		  <property alias="/params/bushkit/property"/>
+		  <value>3</value>
+	    </equals>
 	  </and>
    </condition>
  </animation>
@@ -3670,50 +4022,176 @@
  <animation>
    <type>select</type>
    <object-name>R-FloatCB</object-name>
-   <object-name>RHrudderB</object-name>
    <condition>
 	  <and>
 	    <property alias="/params/pontoon_right_broken/property"/>
+		<equals>
+		  <property alias="/params/bushkit/property"/>
+		  <value>3</value>
+		</equals>
+	  </and>
+   </condition>
+ </animation>
+
+ <!-- Left Amphibious Damaged -->
+ <animation>
+   <type>select</type>
+   <object-name>L-FloatOD</object-name>
+   <object-name>LRwheelOD</object-name>
+   <object-name>LdamperOD</object-name>
+   <object-name>LstrutOD.001</object-name>
+   <object-name>LstrutOD.002</object-name>
+   <condition>
+	  <and>
+	    <property alias="/params/pontoon_left_damaged/property"/>
+		<not>
+		  <property alias="/params/pontoon_left_broken/property"/>
+		</not>
+		<equals>
+		  <property alias="/params/bushkit/property"/>
+		  <value>4</value>
+		</equals>
+	  </and>
+   </condition>
+ </animation>
+
+ <!--Right Amphibious Damaged -->
+ <animation>
+   <type>select</type>
+   <object-name>R-FloatOD</object-name>
+   <object-name>RRwheelOD</object-name>
+   <object-name>RdamperOD</object-name>
+   <object-name>RstrutOD.001</object-name>
+   <object-name>RstrutOD.002</object-name>
+   <condition>
+	  <and>
+	    <property alias="/params/pontoon_right_damaged/property"/>
+		<not>
+		  <property alias="/params/pontoon_right_broken/property"/>
+		</not>
+		<equals>
+		  <property alias="/params/bushkit/property"/>
+		  <value>4</value>
+		</equals>
+	  </and>
+   </condition>
+ </animation>
+
+ <!--Left Amphibious Broken -->
+ <animation>
+   <type>select</type>
+   <object-name>L-FloatOB</object-name>
+   <object-name>LRwheelOB</object-name>
+   <object-name>LdamperOB</object-name>
+   <object-name>LstrutOB.001</object-name>
+   <object-name>LstrutOB.002</object-name>
+   <condition>
+      <and>
+	    <property alias="/params/pontoon_left_broken/property"/>
+		<equals>
+		  <property alias="/params/bushkit/property"/>
+		  <value>4</value>
+		</equals>
+	  </and>
+   </condition>
+ </animation>
+
+ <!--Right Amphibious Broken -->
+ <animation>
+   <type>select</type>
+   <object-name>R-FloatOB</object-name>
+   <object-name>RRwheelOB</object-name>
+   <object-name>RdamperOB</object-name>
+   <object-name>RstrutOB.001</object-name>
+   <object-name>RstrutOB.002</object-name>
+   <condition>
+	  <and>
+	    <property alias="/params/pontoon_right_broken/property"/>
+		<equals>
+		  <property alias="/params/bushkit/property"/>
+		  <value>4</value>
+		</equals>
+	  </and>
+   </condition>
+ </animation>
+
+ <!-- Left Float Damaged -->
+ <animation>
+   <type>select</type>
+   <object-name>LHrudderD</object-name>
+   <condition>
+	  <and>
+	    <property alias="/params/pontoon_left_damaged/property"/>
+		<not>
+		  <property alias="/params/pontoon_left_broken/property"/>
+		</not>
 		<or>
-		  <equals>
-		    <property alias="/params/bushkit/property"/>
-		    <value>3</value>
-		  </equals>
-		  <equals>
-		    <property alias="/params/bushkit/property"/>
-		    <value>4</value>
-		  </equals>
+			<equals>
+			  <property alias="/params/bushkit/property"/>
+			  <value>3</value>
+			</equals>
+			<equals>
+			  <property alias="/params/bushkit/property"/>
+			  <value>4</value>
+			</equals>
 		</or>
 	  </and>
    </condition>
  </animation>
 
- <!--Prop Damaged -->
+ <!--Right Float Damaged -->
  <animation>
    <type>select</type>
-   <object-name>PropellerD</object-name>
+   <object-name>RHrudderD</object-name>
    <condition>
-      <and>
-	    <or>
-		    <property alias="/params/gear_nose_broken/property"/>
-		    <property alias="/params/pontoon_left_damaged/property"/>
-		    <property alias="/params/pontoon_left_broken/property"/>
-		    <property alias="/params/pontoon_right_damaged/property"/>
-		    <property alias="/params/pontoon_right_broken/property"/>
-		</or>
+	  <and>
+	    <property alias="/params/pontoon_right_damaged/property"/>
+		<not>
+		  <property alias="/params/pontoon_right_broken/property"/>
+		</not>
 		<or>
 			<equals>
 			  <property alias="/params/bushkit/property"/>
-			  <value>0</value>
+			  <value>3</value>
 			</equals>
 			<equals>
 			  <property alias="/params/bushkit/property"/>
-			  <value>1</value>
+			  <value>4</value>
+			</equals>
+		</or>
+	  </and>
+   </condition>
+ </animation>
+
+ <!--Left Float Broken -->
+ <animation>
+   <type>select</type>
+   <object-name>LHrudderB</object-name>
+   <condition>
+      <and>
+	    <property alias="/params/pontoon_left_broken/property"/>
+		<or>
+			<equals>
+			  <property alias="/params/bushkit/property"/>
+			  <value>3</value>
 			</equals>
 			<equals>
 			  <property alias="/params/bushkit/property"/>
-			  <value>2</value>
+			  <value>4</value>
 			</equals>
+		</or>
+	  </and>
+   </condition>
+ </animation>
+
+ <!--Right Float Broken -->
+ <animation>
+   <type>select</type>
+   <object-name>RHrudderB</object-name>
+   <condition>
+	  <and>
+	    <property alias="/params/pontoon_right_broken/property"/>
+		<or>
 			<equals>
 			  <property alias="/params/bushkit/property"/>
 			  <value>3</value>
@@ -4154,6 +4632,12 @@
        <not>
          <property>/sim/rendering/rembrandt/enabled</property>
        </not>
+	   <not>
+		  <property alias="/params/wing_left_broken/property"/>
+		</not>
+		<not>
+		  <property alias="/params/wing_both_broken/property"/>
+		</not>
       </and>
    </condition>
  </animation>
@@ -4301,7 +4785,7 @@
    <max>1</max>
  </animation>
 
- <!--strobe-->
+<!--strobe-->
  <!-- Damage Mod -->
  <animation>
    <type>select</type>
@@ -4309,12 +4793,18 @@
    <condition>
        <and>
            <property alias="/params/lighting/strobes/property"/>
+		   <not>
+	           <property alias="/params/wing_left_damaged/property"/>
+	       </not>
 	       <not>
 	           <property alias="/params/wing_left_broken/property"/>
 	       </not>
 		   <not>
 	           <property alias="/params/crash/property"/>
 	       </not>
+		   <not>
+			 <property alias="/params/wing_both_broken/property"/>
+		   </not>
 	   </and>	
    </condition>
  </animation>
@@ -4325,13 +4815,19 @@
    <condition>
        <and>
            <property alias="/params/lighting/strobes/property"/>
+		   <not>
+	           <property alias="/params/wing_right_damaged/property"/>
+	       </not>
 	       <not>
 	           <property alias="/params/wing_right_broken/property"/>
 	       </not>
 		   <not>
 	           <property alias="/params/crash/property"/>
 	       </not>
-	   </and>
+		   <not>
+			 <property alias="/params/wing_both_broken/property"/>
+		   </not>
+	   </and>	
    </condition>
  </animation>
 
@@ -4341,10 +4837,16 @@
    <condition>
        <and>
            <property alias="/params/lighting/strobes/property"/>
-	       <property alias="/params/wing_left_broken/property"/>
+		   <property alias="/params/wing_left_damaged/property"/>
+		   <not>
+	           <property alias="/params/wing_left_broken/property"/>
+		   </not>
 		   <not>
 	           <property alias="/params/crash/property"/>
 	       </not>
+		   <not>
+			 <property alias="/params/wing_both_broken/property"/>
+		   </not>
 	   </and>
    </condition>
  </animation>
@@ -4355,10 +4857,16 @@
    <condition>
        <and>
            <property alias="/params/lighting/strobes/property"/>
-	       <property alias="/params/wing_right_broken/property"/>
+	       <property alias="/params/wing_right_damaged/property"/>
+		   <not>
+		       <property alias="/params/wing_right_broken/property"/>
+		   </not>
 		   <not>
 	           <property alias="/params/crash/property"/>
 	       </not>
+		   <not>
+			 <property alias="/params/wing_both_broken/property"/>
+		   </not>
 	   </and>
    </condition>
  </animation>
@@ -4701,6 +5209,10 @@
    <object-name>RightNavLightD</object-name>
    <object-name>LeftNavLightU</object-name>
    <object-name>RightNavLightU</object-name>
+   <object-name>LeftNavLightDRB</object-name>
+   <object-name>LeftNavLightGRB</object-name>
+   <object-name>RightNavLightDLB</object-name>
+   <object-name>RightNavLightGLB</object-name>
    <object-name>fairing1D</object-name>
    <object-name>fairing2D</object-name>
    <object-name>fairing3D</object-name>
@@ -4721,19 +5233,23 @@
    <object-name>wingRD</object-name>
    <object-name>wingLD</object-name>
    <object-name>wingBD</object-name>
+   <object-name>wingBB</object-name>
+   <object-name>wingLB</object-name>
+   <object-name>wingRB</object-name>
    <object-name>wingCollapse</object-name>
-   <object-name>flapsRD</object-name>
-   <object-name>flapsLD</object-name>
-   <object-name>flapsBD</object-name>
-   <object-name>flapsCollapse</object-name>
+   <object-name>flapsD</object-name>
    <object-name>rightaileronRD</object-name>
    <object-name>rightaileronLD</object-name>
    <object-name>rightaileronBD</object-name>
    <object-name>rightaileronCollapse</object-name>
+   <object-name>rightaileronRDLB</object-name>
+   <object-name>rightaileronRGLB</object-name>
    <object-name>leftaileronRD</object-name>
    <object-name>leftaileronLD</object-name>
    <object-name>leftaileronBD</object-name>
    <object-name>leftaileronCollapse</object-name>
+   <object-name>leftaileronLDRB</object-name>
+   <object-name>leftaileronLGRB</object-name>
    <property-base>sim/model/liverywing/</property-base>
    <texture-prop>texture</texture-prop>
    <texture>wing.png</texture>
@@ -4767,6 +5283,10 @@
    <object-name>R-FloatCD</object-name>
    <object-name>L-FloatCB</object-name>
    <object-name>R-FloatCB</object-name>
+   <object-name>L-FloatOD</object-name>
+   <object-name>R-FloatOD</object-name>
+   <object-name>L-FloatOB</object-name>
+   <object-name>R-FloatOB</object-name>
    <object-name>LHrudderD</object-name>
    <object-name>RHrudderD</object-name>
    <object-name>LHrudderB</object-name>
@@ -4956,22 +5476,26 @@
     <name>LeftFrontGear</name>
     <object-name>Lstrut.001</object-name>
     <object-name>Ldamper</object-name>
-    <object-name>LFwheel</object-name>
+	<object-name>LAxle</object-name>
+    <object-name>LFrontWheel</object-name>
   </animation>
 
   <animation>
     <name>RightFrontGear</name>
     <object-name>Rstrut.001</object-name>
     <object-name>Rdamper</object-name>
-    <object-name>RFwheel</object-name>
+	<object-name>RAxle</object-name>
+    <object-name>RFrontWheel</object-name>
   </animation>
 
   <!--    Retractable Gear    -->
   <animation>
     <type>rotate</type>
     <object-name>Ldamper</object-name>
-    <property>gear/gear[21]/compression-norm</property>
-    <factor>91.5</factor>
+	<object-name>LAxle</object-name>
+    <object-name>LFrontWheel</object-name>
+    <property alias="/params/gear-amphibious/front-left-compression-ft"/>
+    <factor>8</factor>
     <center>
       <x-m>-3.599</x-m>
       <y-m>1.434</y-m>
@@ -4987,7 +5511,7 @@
   <animation>
     <type>translate</type>
     <object-name>LeftFrontGear</object-name>
-    <property>gear/gear[21]/position-norm</property>
+    <property alias="/params/gear-amphibious/front-left-position-norm"/>
     <interpolation>
 	  <entry>
         <ind>0.0</ind>
@@ -5013,7 +5537,7 @@
   <animation>
     <type>translate</type>
     <object-name>Lstrut.002</object-name>
-    <property>gear/gear[21]/position-norm</property>
+    <property alias="/params/gear-amphibious/front-left-position-norm"/>
     <interpolation>
       <entry>
         <ind>0.0</ind>
@@ -5039,8 +5563,10 @@
   <animation>
     <type>rotate</type>
     <object-name>Rdamper</object-name>
-    <property>gear/gear[22]/compression-norm</property>
-    <factor>91.5</factor>
+	<object-name>RAxle</object-name>
+    <object-name>RFrontWheel</object-name>
+    <property alias="/params/gear-amphibious/front-right-compression-ft"/>
+    <factor>8</factor>
     <center>
       <x-m>-3.599</x-m>
       <y-m>-1.434</y-m>
@@ -5056,7 +5582,7 @@
   <animation>
     <type>translate</type>
     <object-name>RightFrontGear</object-name>
-    <property>gear/gear[22]/position-norm</property>
+    <property alias="/params/gear-amphibious/front-right-position-norm"/>
     <interpolation>
 	  <entry>
         <ind>0.0</ind>
@@ -5082,7 +5608,7 @@
   <animation>
     <type>translate</type>
     <object-name>Rstrut.002</object-name>
-    <property>gear/gear[22]/position-norm</property>
+    <property alias="/params/gear-amphibious/front-right-position-norm"/>
     <interpolation>
       <entry>
         <ind>0.0</ind>
@@ -5105,28 +5631,71 @@
     </axis>
   </animation>
 
+ <!-- MOD: Spin to amphibious gears -->
+ <animation>
+	<type>spin</type>
+	<object-name>LFrontWheel</object-name>
+    <property alias="/params/gear-amphibious/front-left-rollspeed-ms"/>
+	<factor>13</factor>
+	<axis>
+		<x>0</x>
+		<y>-1</y>
+		<z>0</z>
+	</axis>
+	<center>
+		<x-m>-2.0435</x-m>
+		<y-m>-1.1492</y-m>
+		<z-m>-2.1462</z-m>
+	</center>
+ </animation>
+
+ <animation>
+	<type>spin</type>
+	<object-name>RFrontWheel</object-name>
+    <property alias="/params/gear-amphibious/front-right-rollspeed-ms"/>
+	<factor>13</factor>
+	<axis>
+		<x>0</x>
+		<y>-1</y>
+		<z>0</z>
+	</axis>
+	<center>
+		<x-m>-2.0435</x-m>
+		<y-m>1.1656</y-m>
+		<z-m>-2.1462</z-m>
+	</center>
+ </animation>
+
+
+ <!-- MODEND: Spin to amphibious gears -->
+
     <animation>
         <type>rotate</type>
-        <object-name>LRwheel</object-name>
+        <object-name>LRtarm</object-name>
+		<object-name>LRAxle</object-name>
+		<object-name>LRwheel</object-name>
         <expression>
             <sum>
                 <product>
-                    <property>gear/gear[23]/compression-norm</property>
-                    <value>39</value>
+                    <sum>
+                        <value>0.07</value>
+                        <property alias="/params/gear-amphibious/rear-left-compression-ft"/>
+                    </sum>
+                    <value>15</value>
                 </product>
                 <product>
                     <table>
-                        <property>gear/gear[23]/position-norm</property>
+                        <property alias="/params/gear-amphibious/rear-left-position-norm"/>
                         <entry><ind>1</ind><dep>0</dep></entry>
-                        <entry><ind>0</ind><dep>20</dep></entry>
+                        <entry><ind>0</ind><dep>10</dep></entry>
                     </table>
                 </product>
             </sum>
         </expression>
         <center>
-            <x-m>-0.223</x-m>
-            <y-m>-1.434</y-m>
-            <z-m>-2.163</z-m>
+            <x-m>-0.6019</x-m>
+            <y-m>-1.1513</y-m>
+            <z-m>-1.8621</z-m>
         </center>
         <axis>
             <x>0</x>
@@ -5137,26 +5706,31 @@
 
     <animation>
         <type>rotate</type>
+		<object-name>RRtarm</object-name>
+		<object-name>RRAxle</object-name>
         <object-name>RRwheel</object-name>
         <expression>
             <sum>
                 <product>
-                    <property>gear/gear[24]/compression-norm</property>
-                    <value>39</value>
+                    <sum>
+                        <value>0.07</value>
+                        <property alias="/params/gear-amphibious/rear-right-compression-ft"/>
+                    </sum>
+                    <value>15</value>
                 </product>
                 <product>
                     <table>
-                        <property>gear/gear[24]/position-norm</property>
+                        <property alias="/params/gear-amphibious/rear-right-position-norm"/>
                         <entry><ind>1</ind><dep>0</dep></entry>
-                        <entry><ind>0</ind><dep>20</dep></entry>
+                        <entry><ind>0</ind><dep>10</dep></entry>
                     </table>
                 </product>
             </sum>
         </expression>
         <center>
-            <x-m>-0.223</x-m>
-            <y-m>1.434</y-m>
-            <z-m>-2.163</z-m>
+            <x-m>-0.6019</x-m>
+            <y-m>1.1676</y-m>
+            <z-m>-1.8621</z-m>
         </center>
         <axis>
             <x>0</x>
@@ -5165,6 +5739,38 @@
         </axis>
     </animation>
 
+ <animation>
+	<type>spin</type>
+	<object-name>LRwheel</object-name>
+    <property alias="/params/gear-amphibious/rear-left-rollspeed-ms"/>
+	<factor>13</factor>
+	<axis>
+		<x>0</x>
+		<y>-1</y>
+		<z>0</z>
+	</axis>
+	<center>
+		<x-m>0.9511</x-m>
+		<y-m>-1.1513</y-m>
+		<z-m>-2.0838</z-m>
+	</center>
+ </animation>
+ <animation>
+	<type>spin</type>
+	<object-name>RRwheel</object-name>
+    <property alias="/params/gear-amphibious/rear-right-rollspeed-ms"/>
+	<factor>13</factor>
+	<axis>
+		<x>0</x>
+		<y>-1</y>
+		<z>0</z>
+	</axis>
+	<center>
+		<x-m>0.9511</x-m>
+		<y-m>1.1676</y-m>
+		<z-m>-2.0838</z-m>
+	</center>
+ </animation>
 
   <!--animation>
     <type>rotate</type>
