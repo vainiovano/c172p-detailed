@@ -2,12 +2,6 @@
   <PropertyList> 
     <path>pedals.ac</path> 
 
-	<effect>
-        <inherits-from>../../../../Effects/interior/c172p-flashlight</inherits-from>
-		<object-name>RightPedal</object-name>
-        <object-name>LeftPedal</object-name>
-    </effect>
-
  <animation>
   <type>translate</type>
   <object-name>LeftPedal</object-name>

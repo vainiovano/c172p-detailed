@@ -2,12 +2,6 @@
   <PropertyList> 
     <path>yoke.ac</path> 
 
-	<effect>
-        <inherits-from>../../../../Effects/interior/c172p-flashlight</inherits-from>
-		<object-name>Yoke</object-name>
-		<object-name>YokeMount</object-name>
-    </effect>
-
  <animation>
   <type>translate</type>
   <object-name>Yoke</object-name>

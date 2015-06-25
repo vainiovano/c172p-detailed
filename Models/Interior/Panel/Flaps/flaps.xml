@@ -2,12 +2,6 @@
   <PropertyList> 
     <path>flaps.ac</path>
 
-	<effect>
-      <inherits-from>../../../../Effects/interior/c172p-flashlight</inherits-from>
-	  <object-name>FlapSwitch</object-name>
-	  <object-name>FlapPos</object-name>
-    </effect>
-
     <animation>
       <type>knob</type>
       <property>controls/flight/flaps</property>

@@ -4,14 +4,6 @@
 
  <path>clock.ac</path>
 
- <effect>
-  <inherits-from>../../../../Effects/interior/c172p-flashlight</inherits-from>
-  <object-name>Face</object-name>
-  <object-name>SecondHand</object-name>
-  <object-name>MinuteHand</object-name>
-  <object-name>HourHand</object-name>
- </effect>
-
  <animation>
   <type>material</type>
   <object-name>Face</object-name>
